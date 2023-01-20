@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>OUR MENU</h1>
+    <section id="buttons">
+
+    </section>
+
+    <div class="result">
+    </div>
+
+    <script>
+
+        const menu = [
+            {
+                name: 'Egg Attack',
+                price: 22.99,
+                category: 'Burgers',
+                image: 'item-5.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Bacon Overflow',
+                price: 8.99,
+                category: 'Burgers',
+                image: 'item-7.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },    
+            {
+                name: 'Buttermilk Pancake',
+                price: 15.99,
+                category: 'Breakfast',
+                image: 'item-1.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Diner Double',
+                price: 13.99,
+                category: 'Burgers',
+                image: 'item-2.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Godzilla Shake',
+                price: 6.99,
+                category: 'Shakes',
+                image: 'item-3.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Country Delight',
+                price: 20.99,
+                category: 'Breakfast',
+                image: 'item-4.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Oreo Dream',
+                price: 18.99,
+                category: 'Shakes',
+                image: 'item-6.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Milk Shake',
+                price: 17,
+                category: 'Shakes',
+                image: 'item-9.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'American Classic',
+                price: 12.99,
+                category: 'Burgers',
+                image: 'item-8.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+            {
+                name: 'Beef Steak',
+                price: 15,
+                category: 'Steaks',
+                image: 'item-10.jpeg',
+                desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, incidunt?'
+            },
+        ]
+
+        window.onload=()=>{
+            displayMenu(menu)
+        }    
+
+        
+        const resultDiv = document.querySelector('.result')
+        const buttonsDiv = document.querySelector('#buttons')
+
+        const buttons = new Set(menu.map(item=>{
+            return `<button type='button'>${item.category}</button>`
+        }))
+
+        const uniqueBtns = [`<button tab-index=0>All</button>`,...buttons].join('')
+
+        buttonsDiv.innerHTML = uniqueBtns
+
+        //event delegation method
+        buttonsDiv.onclick=function(){
+            let target = event.target
+
+            let menuCategory = menu.filter(item=>{
+                if(item.category.includes(target.textContent)){
+                    return item
+                }
+            })
+            
+            if(target.textContent.toLowerCase() == 'all'){
+                displayMenu(menu)
+            } else displayMenu(menuCategory)
+        }
+
+        function displayMenu(menu){
+            const menuItems = menu.map(item=>{
+                const {name,category,image,desc,price} = item
+                
+                return `
+                        <figure>
+                            <img src="${image}" alt="">
+                            <p>${category.toUpperCase()}</p>
+                            <section id="name-price-section">
+                                <span id="name">${name}</span>
+                                <span id="price">${price.toLocaleString('en-US',{
+                                    style: 'currency',
+                                    currency: 'usd'
+                                })}</span>
+                            </section>
+                                
+                            <figcaption id="description">   
+                                ${desc}
+                            </figcaption>
+                        </figure>
+                    `
+            }).join('')
+            resultDiv.innerHTML = menuItems
+        }
+
+    </script>
+</body>
+</html>
